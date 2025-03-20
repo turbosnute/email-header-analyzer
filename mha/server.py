@@ -90,7 +90,16 @@ def getHeaderVal(h, data, rex='\s*(.*?)\n\S+:\s'):
         return r[0].strip()
     else:
         return None
-
+    
+def cleanup_old_analyses():
+    """Remove analyses older than 30 days"""
+    now = datetime.now()
+    for filename in os.listdir(STORAGE_DIR):
+        file_path = os.path.join(STORAGE_DIR, filename)
+        if os.path.isfile(file_path) and filename.endswith('.json'):
+            file_age = now - datetime.fromtimestamp(os.path.getmtime(file_path))
+            if file_age.days > 30:
+                os.remove(file_path)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -262,7 +271,10 @@ def index():
         return redirect(url_for('index', id=analysis_id))
     else:
         return render_template('index.html')
-
+    
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Mail Header Analyser")

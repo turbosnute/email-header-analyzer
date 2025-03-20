@@ -52,7 +52,6 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right icons">
                     <li><a href="https://github.com/lnxg33k/MHA" target="_blank"><i class="fab fa-github"></i></a></li>
-                    <li><a href="https://twitter.com/lnxg33k" target="_blank"><i class="fab fa-twitter"></i></a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -62,8 +61,7 @@
     <div class="container-fluid" style="padding-top: 50px;">
         {% if analysis_id %}
         <div class="alert alert-info">
-            <p>Analysis ID: <strong>{{ analysis_id }}</strong></p>
-            <p>Permanent link: <a href="{{ url_for('index', id=analysis_id, _external=True) }}">{{ url_for('index', id=analysis_id, _external=True) }}</a></p>
+            <p>Analysis link: <a href="{{ url_for('index', id=analysis_id, _external=True) }}">{{ url_for('index', id=analysis_id, _external=True) }}</a></p>
         </div>
         {% endif %}
 

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{{url_for('static', filename='imgs/fav.png')}}">
+    <title>Mail Header Analyzer (MHA) - About</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{{url_for('static', filename='css/ie10-viewport-bug-workaround.css')}}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('static', filename='css/starter-template.css')}}" rel="stylesheet">
+    <script src="{{url_for('static', filename='js/ie-emulation-modes-warning.js')}}"></script>
+    <link href="{{url_for('static', filename='css/bootstrap-table.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/flag-sprites.min.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Mail Header Analyzer <small>(MHA)</small></a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li class="active"><a href="/about">About</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right icons">
+                    <li><a href="https://github.com/lnxg33k/MHA" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Begin page content -->
+    <div class="container" style="padding-top: 70px;">
+        <div class="jumbotron">
+            <h1>About Mail Header Analyzer</h1>
+            <p class="lead">A tool to analyze email headers and track email delivery paths.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Original Development</h2>
+                <p>Mail Header Analyzer (MHA) was originally created by <a href="https://github.com/lnxg33k" target="_blank">Ahmed Shawky</a> (@lnxg33k).</p>
+                <p>The original project is hosted on GitHub at <a href="https://github.com/lnxg33k/MHA" target="_blank">https://github.com/lnxg33k/MHA</a></p>
+                
+                <h2>Features</h2>
+                <ul>
+                    <li>Analyze email header metadata</li>
+                    <li>Track email delivery paths</li>
+                    <li>Calculate and visualize delivery delays</li>
+                    <li>View security headers (SPF, DKIM, etc.)</li>
+                    <li>Permanent links to saved analyses</li>
+                    <li>Geolocate IP addresses in headers</li>
+                </ul>
+                
+                <h2>License</h2>
+                <p>This project is licensed under the GNU General Public License v3.0. See the <a href="https://github.com/lnxg33k/MHA/blob/master/LICENSE" target="_blank">LICENSE</a> file for details.</p>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Contributors</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/lnxg33k" target="_blank">Ahmed Shawky (lnxg33k)</a> - Original creator</li>
+                            <li><a href="https://github.com/lnxg33k/MHA/graphs/contributors" target="_blank">View all contributors</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Technologies Used</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-unstyled">
+                            <li>Python</li>
+                            <li>Flask</li>
+                            <li>Pygal</li>
+                            <li>Bootstrap</li>
+                            <li>GeoIP2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/ie10-viewport-bug-workaround.js')}}"></script>
+</body>
+</html>
