@@ -15,12 +15,23 @@ from pygal.style import Style
 from IPy import IP
 import geoip2.database
 
+
+###
+import os
+import json
+import uuid
+from flask import redirect, url_for
+###
+
 import argparse
 
 app = Flask(__name__)
 reader = geoip2.database.Reader(
     '%s/data/GeoLite2-Country.mmdb' % app.static_folder)
 
+STORAGE_DIR = os.path.join(app.root_path, 'storage')
+if not os.path.exists(STORAGE_DIR):
+    os.makedirs(STORAGE_DIR)
 
 @app.context_processor
 def utility_processor():
@@ -83,6 +94,32 @@ def getHeaderVal(h, data, rex='\s*(.*?)\n\S+:\s'):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # Check if we're trying to retrieve a saved analysis
+    analysis_id = request.args.get('id')
+    if analysis_id:
+        try:
+            # Attempt to load the saved analysis
+            file_path = os.path.join(STORAGE_DIR, f"{analysis_id}.json")
+            if os.path.exists(file_path):
+                with open(file_path, 'r') as f:
+                    saved_data = json.load(f)
+                
+                return render_template(
+                    'index.html', 
+                    data=saved_data['data'], 
+                    delayed=saved_data['delayed'],
+                    summary=saved_data['summary'],
+                    n=HeaderParser().parsestr(saved_data['raw_headers']),
+                    chart=saved_data['chart'],
+                    security_headers=saved_data['security_headers'],
+                    analysis_id=analysis_id
+                )
+            else:
+                # If file doesn't exist, show error message
+                return render_template('index.html', error=f"Analysis ID {analysis_id} not found")
+        except Exception as e:
+            return render_template('index.html', error=f"Error loading analysis: {str(e)}")
+
     if request.method == 'POST':
         mail_data = request.form['headers'].strip()
         r = {}
@@ -150,7 +187,7 @@ def index():
                 ftime = org_time.utctimetuple()
                 ftime = time.strftime('%m/%d/%Y %I:%M:%S %p', ftime)
                 r[c] = {
-                    'Timestmp': org_time,
+                    'Timestmp': org_time.isoformat(),
                     'Time': ftime,
                     'Delay': delay,
                     'Direction': [x.replace('\n', ' ') for x in list(map(str.strip, data[0]))]
@@ -196,9 +233,33 @@ def index():
 
         security_headers = ['Received-SPF', 'Authentication-Results',
                             'DKIM-Signature', 'ARC-Authentication-Results']
-        return render_template(
-            'index.html', data=r, delayed=delayed, summary=summary,
-            n=n, chart=chart, security_headers=security_headers)
+        
+
+        # Generate a unique ID for this analysis
+        analysis_id = str(uuid.uuid4())[:8]  # Use first 8 chars of UUID for shorter URLs
+        
+        # Save the analysis data
+        save_data = {
+            'data': r,
+            'delayed': delayed,
+            'summary': summary,
+            'raw_headers': mail_data,  # Store original headers
+            'chart': chart,
+            'security_headers': security_headers,
+            'timestamp': datetime.now().isoformat()  # Convert datetime to string
+        }
+        
+        file_path = os.path.join(STORAGE_DIR, f"{analysis_id}.json")
+        with open(file_path, 'w') as f:
+            json.dump(save_data, f)
+
+
+
+        #return render_template(
+        #    'index.html', data=r, delayed=delayed, summary=summary,
+        #    n=n, chart=chart, security_headers=security_headers)
+        # Redirect to the same page with the ID parameter
+        return redirect(url_for('index', id=analysis_id))
     else:
         return render_template('index.html')
 

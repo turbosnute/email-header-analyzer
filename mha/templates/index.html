@@ -60,6 +60,18 @@
     </nav>
     <!-- Begin page content -->
     <div class="container-fluid" style="padding-top: 50px;">
+        {% if analysis_id %}
+        <div class="alert alert-info">
+            <p>Analysis ID: <strong>{{ analysis_id }}</strong></p>
+            <p>Permanent link: <a href="{{ url_for('index', id=analysis_id, _external=True) }}">{{ url_for('index', id=analysis_id, _external=True) }}</a></p>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+        {% endif %}
         {% if data %}
         <div class="well well-lg">
             <div class="row" style="padding-top: 15px;">
@@ -89,6 +101,7 @@
                 {% endif %}
             </div>
         </div>
+
         <table id="table" data-toggle="table" data-search="true" data-show-columns="true" data-striped="true"
             data-show-toggle="true" data-show-refresh="true" data-page-size="13" data-sort-name="hop"
             data-sort-order="asc">
@@ -185,7 +198,7 @@
                         <textarea name='headers' class="form-control" rows="25" placeholder="Paste the header in here."
                             autofocus required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">Analyze This !</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Analyze</button>
                 </form>
             </div>
         </div>
